@@ -31,7 +31,7 @@
 
 // --- Função Principal (main) ---
 // Função principal que orquestra o fluxo do jogo, chamando as outras funções em ordem.
-int main() {
+//int main() {
     // 1. Configuração Inicial (Setup):
     // - Define o locale para português.
     // - Inicializa a semente para geração de números aleatórios com base no tempo atual.
@@ -51,8 +51,8 @@ int main() {
     // 3. Limpeza:
     // - Ao final do jogo, libera a memória alocada para o mapa para evitar vazamentos de memória.
 
-    return 0;
-}
+//    return 0;
+//}
 
 // --- Implementação das Funções ---
 
@@ -96,3 +96,65 @@ int main() {
 
 // limparBufferEntrada():
 // Função utilitária para limpar o buffer de entrada do teclado (stdin), evitando problemas com leituras consecutivas de scanf e getchar.
+/*
+ * Programa: Cadastro de 5 Territórios
+ * Disciplina: Programação em C
+ * Descrição: Cadastra 5 territórios com nome, cor do exército e número de tropas,
+ *            e exibe os dados logo após o preenchimento.
+ */
+
+#include <stdio.h>
+#include <string.h>
+
+// Definição da struct Territorio
+// Cada território tem: nome (até 29 caracteres + '\0'), cor (até 9 + '\0') e número de tropas
+typedef struct {
+    char nome[30];
+    char cor[10];
+    int tropas;
+} Territorio;
+
+int main() {
+    // Declaração de um vetor com 5 estruturas do tipo Territorio
+    Territorio territorios[5];
+
+    printf("=== CADASTRO DE TERRITORIOS ===\n\n");
+
+    // Laço para cadastrar os 5 territórios
+    for (int i = 0; i < 5; i++) {
+        printf("--- Territorio %d ---\n", i + 1);
+
+        // Limpa o buffer do teclado antes de usar fgets
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF); // Limpa buffer
+
+        // Leitura do nome do território com fgets
+        printf("Digite o nome do territorio: ");
+        fgets(territorios[i].nome, 30, stdin);
+        // Remove o '\n' que fgets inclui
+        territorios[i].nome[strcspn(territorios[i].nome, "\n")] = '\0';
+
+        // Leitura da cor do exército
+        printf("Digite a cor do exercito: ");
+        fgets(territorios[i].cor, 10, stdin);
+        territorios[i].cor[strcspn(territorios[i].cor, "\n")] = '\0';
+
+        // Leitura do número de tropas
+        printf("Digite a quantidade de tropas: ");
+        scanf("%d", &territorios[i].tropas);
+
+        printf("\n"); // Linha em branco para separar os cadastros
+    }
+
+    // Exibição dos territórios cadastrados
+    printf("=== TERRITORIOS CADASTRADOS ===\n\n");
+    for (int i = 0; i < 5; i++) {
+        printf("Territorio %d:\n", i + 1);
+        printf("  Nome: %s\n", territorios[i].nome);
+        printf("  Cor do exercito: %s\n", territorios[i].cor);
+        printf("  Tropas: %d\n\n", territorios[i].tropas);
+    }
+
+    printf("Cadastro concluido com sucesso!\n");
+    return 0;
+}
